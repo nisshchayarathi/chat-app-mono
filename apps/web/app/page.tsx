@@ -1,11 +1,14 @@
 "use client"
-import { useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-
-  const [roomId, setRoomId] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to signin page by default
+    router.push("/signin");
+  }, [router]);
 
   return (
     <div style={{
@@ -15,13 +18,7 @@ export default function Home() {
       height: "100vh",
       width: "100vw"
     }}>
-      <input style={{padding:10}} value={roomId} onChange={(e)=>{
-        setRoomId(e.target.value);
-      }} type="text" placeholder="Room id"/>
-
-      <button style={{padding:10, margin:10}} onClick={()=>{
-        router.push(`/room/${roomId}`);
-      }}>Join Room</button>
+      <p>Redirecting to sign in...</p>
     </div>
   );
 }
