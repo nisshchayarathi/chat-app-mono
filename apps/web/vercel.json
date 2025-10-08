@@ -1,0 +1,4 @@
+{
+  "installCommand": "cd ../.. && npm install -g pnpm@9.0.0 && pnpm install --filter web...",
+  "buildCommand": "pnpm build"
+}
