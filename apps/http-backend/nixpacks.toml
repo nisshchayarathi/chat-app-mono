@@ -1,11 +1,15 @@
 [phases.setup]
 nixPkgs = ["nodejs_20"]
+aptPkgs = []
 
 [phases.install]
-cmds = ["npm install -g pnpm@9.0.0", "cd ../.. && pnpm install --filter http-backend..."]
+cmds = [
+  "npm install -g pnpm@9.0.0",
+  "export PATH=\"/usr/local/bin:$PATH\" && cd ../.. && pnpm install --filter http-backend..."
+]
 
 [phases.build]
-cmds = ["cd ../.. && pnpm --filter @repo/db exec prisma generate && pnpm --filter http-backend build"]
+cmds = ["export PATH=\"/usr/local/bin:$PATH\" && cd ../.. && pnpm --filter @repo/db exec prisma generate && pnpm --filter http-backend build"]
 
 [start]
 cmd = "node ./dist/index.js"
