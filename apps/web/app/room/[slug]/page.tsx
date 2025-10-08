@@ -4,17 +4,19 @@ import { ChatRoom } from "../../../components/ChatRoom";
 
 async function getRoomId(slug: string) {
   try {
-    // First try to get existing room
-    const response = await axios.get(`${BACKEND_URL}/room/${slug}`);
+    // Try to get existing room with timeout
+    const response = await axios.get(`${BACKEND_URL}/room/${slug}`, {
+      timeout: 3000 // 3 second timeout
+    });
     if (response.data.room) {
       return response.data.room.id.toString();
     }
   } catch (error) {
-    // Room doesn't exist, use slug as temporary ID
-    console.log("Room not found, using slug as room identifier");
+    // Room doesn't exist or backend timeout, use slug as room ID
+    console.log("Room not found or backend unavailable, using slug as room identifier");
   }
-  
-  // Use slug as room identifier if room doesn't exist
+
+  // Use slug as room identifier
   return slug;
 }
 

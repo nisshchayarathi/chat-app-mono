@@ -18,7 +18,7 @@ export default function Signup() {
         username,
         password,
       });
-      
+
       if (res.data.userId) {
         alert("Signup successful! Please sign in.");
         router.push("/signin");
@@ -62,7 +62,10 @@ export default function Signup() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleSignup} style={{ padding: 10, margin: 10, width: 300 }}>
+      <button
+        onClick={handleSignup}
+        style={{ padding: 10, margin: 10, width: 300 }}
+      >
         Sign Up
       </button>
       <p>
