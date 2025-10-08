@@ -104,47 +104,94 @@ app.post("/room", middleware, async (req, res) => {
 });
 
 app.get("/chats/:roomId", async (req, res) => {
-  const roomId = Number(req.params.roomId);
-  const messages = await prismaClient.chat.findMany({
-    where: {
-      roomId,
-    },
-    orderBy: {
-      id: "asc",
-    },
-    take: 50,
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
+  try {
+    const roomId = Number(req.params.roomId);
+    console.log(`Fetching chats for room: ${roomId}`);
+    
+    const messages = await prismaClient.chat.findMany({
+      where: {
+        roomId,
+      },
+      orderBy: {
+        id: "asc",
+      },
+      take: 50,
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
         },
       },
-    },
-  });
+    });
 
-  res.json({
-    messages,
-  });
+    console.log(`Found ${messages.length} messages for room ${roomId}`);
+    res.json({
+      messages,
+    });
+  } catch (error) {
+    console.error("Error fetching chats:", error);
+    res.status(500).json({
+      messages: [],
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
 });
 
 app.get("/room/:slug", async (req, res) => {
-  const slug = req.params.slug;
-  const room = await prismaClient.room.findFirst({
-    where: {
-      slug,
-    },
-  });
-  if (!room) {
-    return null;
+  try {
+    const slug = req.params.slug;
+    console.log(`Looking for room with slug: ${slug}`);
+    
+    const room = await prismaClient.room.findFirst({
+      where: {
+        slug,
+      },
+    });
+    
+    if (!room) {
+      console.log(`Room not found: ${slug}`);
+      return res.status(404).json({
+        message: "Room not found",
+        room: null,
+      });
+    }
+    
+    console.log(`Room found: ${room.id}`);
+    res.json({
+      room,
+    });
+  } catch (error) {
+    console.error("Error fetching room:", error);
+    res.status(500).json({
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
   }
-  res.json({
-    room,
-  });
 });
 
 app.get("/", (req, res) => {
   res.json({ status: "ok", message: "HTTP Backend is running" });
+});
+
+app.get("/health", async (req, res) => {
+  try {
+    // Test database connection
+    await prismaClient.$queryRaw`SELECT 1`;
+    res.json({ 
+      status: "healthy", 
+      database: "connected",
+      timestamp: new Date().toISOString() 
+    });
+  } catch (error) {
+    console.error("Health check failed:", error);
+    res.status(500).json({ 
+      status: "unhealthy", 
+      database: "disconnected",
+      error: error instanceof Error ? error.message : "Unknown error" 
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3001;
