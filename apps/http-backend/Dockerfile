@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy root package files from parent directory
+# Copy root package files from parent directory  
 COPY ../../package.json ../../pnpm-lock.yaml ../../pnpm-workspace.yaml ./
 
 # Copy packages from parent
