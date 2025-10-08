@@ -2,8 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy entire monorepo from parent
-COPY ../.. .
+# Copy entire monorepo
+COPY . .
 
 # Install pnpm
 RUN npm install -g pnpm@9.0.0

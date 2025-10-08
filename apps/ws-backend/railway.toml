@@ -1,6 +1,10 @@
 [build]
 builder = "DOCKERFILE"
-dockerfilePath = "./Dockerfile"
+dockerfilePath = "apps/ws-backend/Dockerfile"
+watchPatterns = ["apps/ws-backend/**"]
+
+[build.buildContext]
+root = "/"
 
 [deploy]
 startCommand = "node apps/ws-backend/dist/index.js"
