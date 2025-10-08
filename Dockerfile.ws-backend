@@ -2,8 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files first
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# Copy package files first (copy workspace file if exists)
+COPY package.json pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml* ./
 
 # Install pnpm
 RUN npm install -g pnpm@9.0.0
