@@ -14,11 +14,8 @@ RUN pnpm install --frozen-lockfile
 # Build WS backend
 RUN pnpm --filter ws-backend build
 
-# Set working directory
-WORKDIR /app/apps/ws-backend
-
 # Expose port
 EXPOSE 8080
 
-# Start
-CMD ["node", "./dist/index.js"]
+# Start (note: we're in /app, so path is apps/ws-backend/dist/index.js)
+CMD ["node", "apps/ws-backend/dist/index.js"]
