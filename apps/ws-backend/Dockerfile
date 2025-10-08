@@ -2,12 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy root package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
-# Copy all packages
-COPY packages ./packages
-COPY apps/ws-backend ./apps/ws-backend
+# Copy everything from repo root (Railway sets context to repo root)
+COPY . .
 
 # Install pnpm
 RUN npm install -g pnpm@9.0.0
@@ -18,14 +14,11 @@ RUN pnpm install --frozen-lockfile
 # Generate Prisma client (CRITICAL!)
 RUN pnpm --filter @repo/db exec prisma generate
 
-# Build
+# Build WS backend
 RUN pnpm --filter ws-backend build
-
-# Set working directory to the app
-WORKDIR /app/apps/ws-backend
 
 # Expose port
 EXPOSE 8080
 
-# Start
-CMD ["node", "./dist/index.js"]
+# Start WebSocket backend
+CMD ["node", "apps/ws-backend/dist/index.js"]

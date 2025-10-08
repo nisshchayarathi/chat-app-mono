@@ -2,12 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy root package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
-# Copy all packages
-COPY packages ./packages
-COPY apps/http-backend ./apps/http-backend
+# Copy everything from repo root (Railway sets context to repo root)
+COPY . .
 
 # Install pnpm
 RUN npm install -g pnpm@9.0.0
@@ -18,14 +14,11 @@ RUN pnpm install --frozen-lockfile
 # Generate Prisma client (CRITICAL!)
 RUN pnpm --filter @repo/db exec prisma generate
 
-# Build
+# Build HTTP backend
 RUN pnpm --filter http-backend build
-
-# Set working directory to the app
-WORKDIR /app/apps/http-backend
 
 # Expose port
 EXPOSE 3001
 
-# Start
-CMD ["node", "./dist/index.js"]
+# Start HTTP backend
+CMD ["node", "apps/http-backend/dist/index.js"]
