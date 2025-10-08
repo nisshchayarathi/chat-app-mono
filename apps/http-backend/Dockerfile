@@ -15,6 +15,9 @@ RUN npm install -g pnpm@9.0.0
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
+# Generate Prisma client (CRITICAL!)
+RUN pnpm --filter @repo/db exec prisma generate
+
 # Build
 RUN pnpm --filter http-backend build
 

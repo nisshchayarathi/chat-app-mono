@@ -5,7 +5,7 @@ import { ChatRoomClient } from "./ChatRoomClient";
 async function getChats(roomId: string) {
   try {
     const response = await axios.get(`${BACKEND_URL}/chats/${roomId}`, {
-      timeout: 3000 // 3 second timeout
+      timeout: 3000, // 3 second timeout
     });
     return response.data.messages || [];
   } catch (error) {
