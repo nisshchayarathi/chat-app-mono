@@ -19,8 +19,8 @@ export default function Signin() {
       const token = res.data.token;
       localStorage.setItem("chat-token", token);
 
-      // ✅ Navigate to chat room after sign in
-      router.push("/");
+      // ✅ Navigate to rooms page after sign in
+      router.push("/rooms");
     } catch (err) {
       console.error("Signin failed:", err);
       alert("Signin failed. Please check your credentials.");
@@ -55,6 +55,12 @@ export default function Signin() {
       <button onClick={handleSignin} style={{ padding: 10, margin: 10 }}>
         Sign in
       </button>
+      <p>
+        Don't have an account?{" "}
+        <a href="/signup" style={{ color: "blue", cursor: "pointer" }}>
+          Sign up
+        </a>
+      </p>
     </div>
   );
 }
