@@ -1,6 +1,6 @@
 [build]
-builder = "dockerfile"
-dockerfilePath = "../../Dockerfile.ws-backend"
+builder = "DOCKERFILE"
+dockerfilePath = "./Dockerfile"
 
 [deploy]
 startCommand = "node apps/ws-backend/dist/index.js"
