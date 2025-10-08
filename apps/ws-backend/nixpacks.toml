@@ -4,7 +4,7 @@ aptPkgs = []
 
 [phases.install]
 cmds = [
-  "corepack enable && corepack prepare pnpm@9.0.0 --activate && cd ../.. && pnpm install --filter ws-backend..."
+  "corepack enable && corepack prepare pnpm@9.0.0 --activate && cd ../.. && NODE_OPTIONS='--max-old-space-size=4096' pnpm install --filter ws-backend... --frozen-lockfile"
 ]
 
 [phases.build]
