@@ -1,8 +1,5 @@
 {
-  "buildCommand": "pnpm install && cd apps/web && pnpm build",
-  "outputDirectory": "apps/web/.next",
-  "installCommand": "npm install -g pnpm@9.0.0 && pnpm install",
-  "devCommand": "cd apps/web && pnpm dev",
-  "framework": null,
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./apps/web"
+  "buildCommand": "npm install && npm run build",
+  "installCommand": "npm install -g pnpm@9.0.0 && pnpm install"
 }
+
