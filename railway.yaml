@@ -1,0 +1,18 @@
+version: 2
+
+services:
+  http-backend:
+    build:
+      builder: DOCKERFILE
+      dockerfilePath: Dockerfile.http-backend
+    deploy:
+      numReplicas: 1
+      restartPolicyType: ON_FAILURE
+
+  ws-backend:
+    build:
+      builder: DOCKERFILE
+      dockerfilePath: Dockerfile.ws-backend
+    deploy:
+      numReplicas: 1
+      restartPolicyType: ON_FAILURE
