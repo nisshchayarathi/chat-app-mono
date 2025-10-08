@@ -3,6 +3,7 @@
 ## TL;DR - Deploy to Production
 
 ### 1. Deploy Frontend (Vercel)
+
 ```bash
 # Install Vercel CLI
 pnpm add -g vercel
@@ -26,6 +27,7 @@ cd apps/web && vercel --prod
 4. Add **two services**:
 
 #### HTTP Backend Service:
+
 - **Root Directory**: `apps/http-backend`
 - **Build Command**: `pnpm install && pnpm build`
 - **Start Command**: `pnpm start`
@@ -37,6 +39,7 @@ cd apps/web && vercel --prod
   ```
 
 #### WebSocket Backend Service:
+
 - **Root Directory**: `apps/ws-backend`
 - **Build Command**: `pnpm install && pnpm build`
 - **Start Command**: `pnpm start`
@@ -71,6 +74,7 @@ NEXT_PUBLIC_WS_URL=wss://your-ws-backend.up.railway.app
 **Important**: Use `https://` for HTTP backend and `wss://` for WebSocket backend in production!
 
 ### 4. Redeploy Frontend
+
 ```bash
 cd apps/web && vercel --prod
 ```
@@ -80,6 +84,7 @@ cd apps/web && vercel --prod
 ## ✅ Verification
 
 After deployment, test:
+
 1. Visit your Vercel URL
 2. Sign up / Sign in
 3. Create a room
@@ -91,13 +96,16 @@ After deployment, test:
 ## 🔧 Alternative Deployment Options
 
 ### Option 2: Render.com
+
 Similar to Railway, but:
+
 - Go to [render.com](https://render.com)
 - Create two "Web Services"
 - Configure build & start commands
 - Add PostgreSQL database
 
 ### Option 3: Self-hosted (VPS/EC2)
+
 ```bash
 # SSH into your server
 git clone your-repo

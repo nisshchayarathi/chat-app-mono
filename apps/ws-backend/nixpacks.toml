@@ -2,10 +2,10 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["npm install -g pnpm@9.0.0", "cd ../.. && pnpm install"]
+cmds = ["npm install -g pnpm@9.0.0", "cd ../.. && pnpm install --filter ws-backend..."]
 
 [phases.build]
 cmds = ["cd ../.. && pnpm --filter ws-backend build"]
 
 [start]
-cmd = "cd apps/ws-backend && node ./dist/index.js"
+cmd = "node ./dist/index.js"

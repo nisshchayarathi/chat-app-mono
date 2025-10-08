@@ -3,6 +3,7 @@
 ## Architecture Overview
 
 Your app has 3 parts:
+
 1. **Next.js Web App** (`apps/web`) - Frontend
 2. **HTTP Backend** (`apps/http-backend`) - REST API
 3. **WebSocket Backend** (`apps/ws-backend`) - Real-time chat
@@ -12,16 +13,19 @@ Your app has 3 parts:
 ### Step 1: Deploy Next.js App to Vercel
 
 1. **Install Vercel CLI** (if not already installed):
+
    ```bash
    pnpm add -g vercel
    ```
 
 2. **Login to Vercel**:
+
    ```bash
    vercel login
    ```
 
 3. **Deploy from the web app directory**:
+
    ```bash
    cd apps/web
    vercel
@@ -41,6 +45,7 @@ Your app has 3 parts:
    - `DATABASE_URL` - Your PostgreSQL connection string
 
 ### Step 2: Production Deploy
+
 ```bash
 vercel --prod
 ```
@@ -54,6 +59,7 @@ vercel --prod
 ### Recommended Options:
 
 #### Option 1: Railway.app (Easiest)
+
 1. Go to [railway.app](https://railway.app)
 2. Create a new project
 3. Deploy from GitHub
@@ -65,17 +71,20 @@ vercel --prod
    - `JWT_SECRET`
 
 #### Option 2: Render.com
+
 1. Go to [render.com](https://render.com)
 2. Create two Web Services:
    - HTTP Backend: Node, build command: `cd apps/http-backend && pnpm install && pnpm build`, start: `pnpm start`
    - WS Backend: Node, build command: `cd apps/ws-backend && pnpm install && pnpm build`, start: `pnpm start`
 
 #### Option 3: DigitalOcean App Platform
+
 1. Create a new app
 2. Add components for both backends
 3. Configure environment variables
 
 #### Option 4: AWS EC2 / VPS
+
 ```bash
 # SSH into your server
 # Install Node.js, pnpm
@@ -90,21 +99,27 @@ cd ../ws-backend && pnpm build && pm2 start dist/index.js --name ws-backend
 ## 📝 Environment Variables
 
 ### Frontend (apps/web)
+
 Create `apps/web/.env.local`:
+
 ```env
 NEXT_PUBLIC_WS_URL=wss://your-ws-backend.railway.app
 NEXT_PUBLIC_BACKEND_URL=https://your-http-backend.railway.app
 ```
 
 ### HTTP Backend (apps/http-backend)
+
 Create `apps/http-backend/.env`:
+
 ```env
 DATABASE_URL=postgresql://user:password@host:5432/dbname
 JWT_SECRET=your-super-secret-key-change-this
 ```
 
 ### WebSocket Backend (apps/ws-backend)
+
 Create `apps/ws-backend/.env`:
+
 ```env
 DATABASE_URL=postgresql://user:password@host:5432/dbname
 JWT_SECRET=your-super-secret-key-change-this
@@ -145,6 +160,7 @@ For backends on Railway/Render, add these to your `package.json`:
 ## ✅ Verification Checklist
 
 After deployment:
+
 - [ ] Frontend loads at Vercel URL
 - [ ] Can sign up / sign in
 - [ ] Can create a room
@@ -159,19 +175,25 @@ After deployment:
 ## 🐛 Common Issues
 
 ### 1. WebSocket Connection Failed
+
 - Check `NEXT_PUBLIC_WS_URL` is correct (starts with `wss://` not `ws://` in production)
 - Ensure WebSocket backend is running and accessible
 - Check firewall/security group allows WebSocket connections
 
 ### 2. CORS Errors
+
 Make sure your HTTP backend has CORS enabled for your Vercel domain:
+
 ```ts
-app.use(cors({
-  origin: ['https://your-app.vercel.app']
-}));
+app.use(
+  cors({
+    origin: ["https://your-app.vercel.app"],
+  })
+);
 ```
 
 ### 3. Database Connection Issues
+
 - Verify `DATABASE_URL` is set in all environments
 - Check database allows connections from your deployment IPs
 - Run migrations: `pnpm prisma migrate deploy`

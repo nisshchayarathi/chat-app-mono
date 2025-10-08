@@ -12,8 +12,9 @@
 ## 📋 **Next Steps - Deploy Backends to Render.com**
 
 ### **Step 1: Sign Up & Connect GitHub**
+
 1. Go to: **https://render.com**
-2. Click **"Get Started"** 
+2. Click **"Get Started"**
 3. **Sign up with GitHub** (easiest)
 4. Authorize Render to access: `NischayRathi/chat-app-mono`
 
@@ -42,12 +43,15 @@
    - **Instance Type:** **Free** ⭐
 
 4. **Environment Variables** (click "Advanced"):
+
    ```
    DATABASE_URL=postgresql://neondb_owner:npg_NSRt8Ysjdn5f@ep-gentle-breeze-adqpxi20-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
    ```
+
    ```
    JWT_SECRET=super-secret-production-key-change-this-12345
    ```
+
    ```
    PORT=3001
    ```
@@ -60,7 +64,7 @@
 
 ### **Step 3: Create WebSocket Backend Service**
 
-1. Click **"New +"** → **"Web Service"**  
+1. Click **"New +"** → **"Web Service"**
 2. Select repository: **`chat-app-mono`**
 3. Configure:
 
@@ -81,12 +85,15 @@
    - **Instance Type:** **Free** ⭐
 
 4. **Environment Variables:**
+
    ```
    DATABASE_URL=postgresql://neondb_owner:npg_NSRt8Ysjdn5f@ep-gentle-breeze-adqpxi20-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
    ```
+
    ```
    JWT_SECRET=super-secret-production-key-change-this-12345
    ```
+
    ```
    PORT=8080
    ```
@@ -132,6 +139,7 @@ Once both backends are deployed:
 Your app will be live at: **https://chatapp-[random].vercel.app**
 
 Test it:
+
 1. ✅ Sign up with a new account
 2. ✅ Sign in
 3. ✅ Create a room
@@ -145,24 +153,28 @@ Test it:
 ### **Free Tier Limitations:**
 
 **Render.com (Backends):**
+
 - 🟢 Free tier services **sleep after 15 minutes** of inactivity
 - 🟡 First request after sleep takes **30-60 seconds** to wake up
 - ✅ Good for demos and learning projects
 
 **Vercel (Frontend):**
+
 - 🟢 **Always active**, no sleeping
 - ✅ Completely free for hobby projects
 
 ### **To Keep Backends Awake:**
+
 Use a service like **UptimeRobot** or **cron-job.org** to ping your backends every 10 minutes.
 
 ---
 
 ## 🔒 **Security Reminder:**
 
-**Change the JWT_SECRET!** 
+**Change the JWT_SECRET!**
 
 Generate a strong random secret:
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
