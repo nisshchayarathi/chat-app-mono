@@ -4,11 +4,11 @@ aptPkgs = []
 
 [phases.install]
 cmds = [
-  "npm install -g pnpm@9.0.0 && ln -sf $(npm root -g)/pnpm/bin/pnpm.cjs /usr/local/bin/pnpm && cd ../.. && pnpm install --filter http-backend..."
+  "corepack enable && corepack prepare pnpm@9.0.0 --activate && cd ../.. && pnpm install --filter http-backend..."
 ]
 
 [phases.build]
-cmds = ["cd ../.. && /usr/local/bin/pnpm --filter @repo/db exec prisma generate && /usr/local/bin/pnpm --filter http-backend build"]
+cmds = ["cd ../.. && pnpm --filter @repo/db exec prisma generate && pnpm --filter http-backend build"]
 
 [start]
 cmd = "node ./dist/index.js"
