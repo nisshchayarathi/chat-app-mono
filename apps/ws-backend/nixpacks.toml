@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ["nodejs", "pnpm"]
+nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["cd ../.. && pnpm install"]
+cmds = ["npm install -g pnpm@9.0.0", "cd ../.. && pnpm install"]
 
 [phases.build]
 cmds = ["cd ../.. && pnpm --filter ws-backend build"]
 
 [start]
-cmd = "node ./dist/index.js"
+cmd = "cd apps/ws-backend && node ./dist/index.js"
