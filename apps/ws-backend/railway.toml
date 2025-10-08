@@ -1,8 +1,9 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "Dockerfile"
+dockerfilePath = "Dockerfile.ws-backend"
+watchPatterns = ["apps/ws-backend/**", "packages/**"]
 
 [deploy]
-startCommand = "node ./dist/index.js"
+startCommand = "node apps/ws-backend/dist/index.js"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10

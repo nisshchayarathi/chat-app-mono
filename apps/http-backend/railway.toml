@@ -1,8 +1,9 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "Dockerfile"
+dockerfilePath = "Dockerfile.http-backend"
+watchPatterns = ["apps/http-backend/**", "packages/**"]
 
 [deploy]
-startCommand = "node ./dist/index.js"
+startCommand = "node apps/http-backend/dist/index.js"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
