@@ -21,20 +21,16 @@ export function ChatRoomClient({
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const currentUserId = getCurrentUserId();
 
+  // Join room & listen for new messages
   useEffect(() => {
     if (!socket || loading) return;
 
-    socket.send(
-      JSON.stringify({
-        type: "join_room",
-        roomId: id,
-      })
-    );
+    socket.send(JSON.stringify({ type: "join_room", roomId: id }));
 
     const handleMessage = (event: MessageEvent) => {
-      const parsedData = JSON.parse(event.data);
-      if (parsedData.type === "chat") {
-        setChats((prev) => [...prev, parsedData.message]);
+      const parsed = JSON.parse(event.data);
+      if (parsed.type === "chat") {
+        setChats((prev) => [...prev, parsed.message]);
       }
     };
 
@@ -42,11 +38,16 @@ export function ChatRoomClient({
     return () => socket.removeEventListener("message", handleMessage);
   }, [socket, loading, id]);
 
-  // ✅ Auto-scroll to bottom when chats update
+  // Auto-scroll if user is near bottom
   useEffect(() => {
     const container = chatContainerRef.current;
-    if (container) {
-      container.scrollTop = container.scrollHeight;
+    if (!container) return;
+
+    const isAtBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+
+    if (isAtBottom) {
+      container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
     }
   }, [chats]);
 
@@ -74,12 +75,8 @@ export function ChatRoomClient({
         />
         <style jsx>{`
           @keyframes spin {
-            0% {
-              transform: rotate(0deg);
-            }
-            100% {
-              transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
         `}</style>
       </div>
@@ -105,7 +102,6 @@ export function ChatRoomClient({
           overflowY: "auto",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end", // keeps content at bottom
           padding: "10px",
         }}
       >

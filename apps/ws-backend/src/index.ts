@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { WebSocketServer, WebSocket } from "ws";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/backend_common/config";
@@ -8,7 +9,7 @@ import { prismaClient } from "@repo/db/client";
 // 3. uses queues for chats being stored in a db
 // 4. right now users can spam messages we need to set a limit
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.WS_PORT || 8080;
 const wss = new WebSocketServer({ port: Number(PORT) });
 console.log(`WebSocket server listening on port ${PORT}`);
 interface User {
